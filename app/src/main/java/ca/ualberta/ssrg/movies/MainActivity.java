@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -75,7 +76,8 @@ public class MainActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		
-		
+		SearchThread thread =new SearchThread("*");
+		thread.start();
 
 		// Refresh the list when visible
 		// TODO: Search all
@@ -132,6 +134,16 @@ public class MainActivity extends Activity {
 
 	class SearchThread extends Thread {
 		// TODO: Implement search thread
+		private String search;
+		public SearchThread(String search){
+			this.search =search;
+		}
+
+		@Override
+		public void run(){
+			movies.clear();
+			movies.addAll(movieManager.searchMovies(search, null));
+		}
 		
 	}
 
